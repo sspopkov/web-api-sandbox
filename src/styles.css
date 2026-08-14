@@ -314,11 +314,24 @@ button {
   background: #f0fdfa;
 }
 
+.feedCard.inView {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
 .sentinel {
   padding: 22px;
   text-align: center;
   border: 1px dashed #8b98a8;
   border-radius: 8px;
+}
+
+.sentinel.complete {
+  border-style: solid;
+  border-color: #0f766e;
+  background: #f0fdfa;
+  color: #0f766e;
+  font-weight: 700;
 }
 
 .pulseStage {
