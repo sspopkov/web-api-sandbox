@@ -384,8 +384,11 @@ button {
 
 .eventGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
   gap: 8px;
+  max-height: 390px;
+  padding-right: 4px;
+  overflow: auto;
 }
 
 .eventCell {
@@ -398,15 +401,233 @@ button {
 }
 
 .eventPlaygroundOuter {
+  display: grid;
+  gap: 12px;
   border: 2px solid #0f766e;
   padding: 16px;
   border-radius: 8px;
 }
 
 .eventPlaygroundInner {
+  display: grid;
+  gap: 12px;
   border: 2px solid #2563eb;
   padding: 16px;
   border-radius: 8px;
+}
+
+.eventPlaygroundOuter > span,
+.eventPlaygroundInner > span {
+  color: #4b5563;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.eventPlaygroundInner .button {
+  justify-self: start;
+}
+
+.eventSectionHeader {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.eventSectionHeader > div > span {
+  color: #657181;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.panel .eventSectionHeader h3 {
+  margin: 4px 0 0;
+}
+
+.eventSectionHeader p {
+  margin: 0;
+  color: #5b6573;
+  line-height: 1.5;
+}
+
+.eventStrategyStatus {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-left: 4px solid #d97706;
+  background: #fffbeb;
+  line-height: 1.45;
+}
+
+.eventStrategyStatus.delegated {
+  border-left-color: #0f766e;
+  background: #f0fdfa;
+}
+
+.eventStrategyStatus span {
+  color: #5b6573;
+}
+
+.eventStrategyLayout,
+.eventFlowLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.75fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.eventStrategyLayout h4 {
+  margin: 0 0 10px;
+}
+
+.eventSimpleLog {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.eventSimpleLog li {
+  padding: 8px 4px;
+  border-bottom: 1px solid #e5e7eb;
+  line-height: 1.4;
+}
+
+.eventSimpleLog li:last-child {
+  border-bottom: 0;
+}
+
+.eventEmptyState {
+  margin: 0;
+  padding: 16px 0;
+  color: #657181;
+}
+
+.eventOption {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  padding: 12px 0;
+  border-top: 1px solid #dfe4ea;
+  border-bottom: 1px solid #dfe4ea;
+  line-height: 1.4;
+}
+
+.eventOption input {
+  margin-top: 3px;
+}
+
+.eventOption span,
+.eventOption small {
+  display: block;
+}
+
+.eventOption small {
+  margin-top: 3px;
+  color: #657181;
+}
+
+.eventFlowSummary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dfe4ea;
+  color: #5b6573;
+}
+
+.eventFlowSummary strong {
+  color: #17202a;
+}
+
+.eventTimeline {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eventTimeline li {
+  display: grid;
+  grid-template-columns: 28px 66px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  padding: 9px 10px;
+  border-left: 4px solid #8b98a8;
+  background: #f6f7f9;
+}
+
+.eventTimeline li.capture {
+  border-left-color: #2563eb;
+}
+
+.eventTimeline li.target {
+  border-left-color: #d97706;
+}
+
+.eventTimeline li.bubble {
+  border-left-color: #0f766e;
+}
+
+.eventStep,
+.eventPhase {
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.eventPhase {
+  color: #5b6573;
+  text-transform: uppercase;
+}
+
+.eventTimeline small {
+  display: block;
+  margin-top: 2px;
+  color: #657181;
+  line-height: 1.35;
+}
+
+.eventNote {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #dfe4ea;
+  color: #5b6573;
+  line-height: 1.5;
+}
+
+.defaultActionResult {
+  display: grid;
+  gap: 3px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-left: 4px solid #0f766e;
+  background: #f0fdfa;
+  line-height: 1.45;
+}
+
+.defaultActionResult span {
+  color: #5b6573;
+}
+
+.defaultDestination {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px dashed #8b98a8;
+  background: #f6f7f9;
+  text-align: center;
+}
+
+.defaultDestination:target {
+  border-color: #d97706;
+  border-style: solid;
+  background: #fffbeb;
+  outline: 3px solid rgb(217 119 6 / 25%);
 }
 
 .scrollBox {
@@ -536,7 +757,10 @@ button {
 
 @media (max-width: 820px) {
   .appShell,
-  .twoColumn {
+  .twoColumn,
+  .eventSectionHeader,
+  .eventStrategyLayout,
+  .eventFlowLayout {
     grid-template-columns: 1fr;
   }
 
@@ -547,5 +771,15 @@ button {
 
   .content {
     padding: 20px;
+  }
+
+  .eventSectionHeader,
+  .eventStrategyLayout,
+  .eventFlowLayout {
+    gap: 14px;
+  }
+
+  .eventTimeline li {
+    grid-template-columns: 24px 60px minmax(0, 1fr);
   }
 }
