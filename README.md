@@ -1,84 +1,127 @@
 # Web API Sandbox
 
-## Project Purpose
+Учебный frontend-проект для практического изучения современных браузерных API, управления рендерингом и оптимизации производительности интерфейсов.
 
-Web API Sandbox is a learning frontend project for practicing modern browser APIs, rendering behavior, and interface performance. The app is a set of small interactive React + TypeScript labs where each example compares a naive implementation with a browser-native API or a more careful rendering pattern.
+Проект состоит из набора небольших интерактивных лабораторных работ на React + TypeScript. Каждая лабораторная показывает, какую проблему решает конкретный Browser API, как выглядит более наивный подход, как работает оптимизированный вариант и какой эффект это дает для UX или производительности.
 
-Frontend developers benefit from understanding these APIs because performance problems often happen at the boundary between framework code and the browser: layout, paint, input handling, observers, main-thread work, and scheduling.
+## Цель Проекта
 
-## Labs
+Frontend-разработчику важно понимать не только React, но и то, как браузер выполняет JavaScript, обрабатывает события, считает layout, рисует кадры, планирует задачи и освобождает main thread.
+
+Этот проект помогает потрогать эти механики руками:
+
+- переключать наивную и оптимизированную реализации;
+- запускать сценарии, которые нагружают main thread;
+- видеть простые диагностические метрики прямо в интерфейсе;
+- сравнивать поведение в Chrome DevTools Performance.
+
+## Технологии
+
+- TypeScript
+- React
+- Vite
+- CSS
+- ESLint
+- Prettier
+
+Проект намеренно не использует тяжелые UI-библиотеки и абстракции, которые скрывают работу браузерных API.
+
+## Лабораторные
 
 ### ResizeObserver
 
-- Purpose: react to an element's own size instead of the whole window.
-- Project example: a resizable analytics widget changes from compact to roomy layout.
-- Real scenarios: dashboards, editors, embedded widgets, split panels, responsive cards.
-- Impact: better component-level adaptation and fewer global resize listeners.
+- Назначение: отслеживать изменение размера конкретного элемента, а не всего окна.
+- Пример в проекте: resizable analytics widget меняет компоновку с компактной на многоколоночную в зависимости от собственной ширины.
+- Реальные сценарии: dashboards, split panels, editors, embedded widgets, responsive cards.
+- Эффект: компонент точнее адаптируется к контейнеру и не требует глобального `window.resize`.
 
 ### IntersectionObserver
 
-- Purpose: detect viewport entry without polling geometry on every scroll.
-- Project example: cards initialize lazily and a sentinel loads the next feed page.
-- Real scenarios: lazy images, infinite feeds, analytics exposure tracking, deferred widgets.
-- Impact: less urgent scroll work and cleaner lazy initialization.
+- Назначение: определять появление элементов во viewport без ручного polling на каждый `scroll`.
+- Пример в проекте: карточки лениво инициализируются при попадании в область видимости, а sentinel подгружает следующую порцию списка.
+- Реальные сценарии: lazy loading изображений, infinite scroll, exposure analytics, deferred widgets.
+- Эффект: меньше срочной работы во время scroll и более чистая логика lazy initialization.
 
 ### Web Workers
 
-- Purpose: move CPU-heavy work off the main thread.
-- Project example: prime counting runs either on the main thread or inside a Worker while an animation shows responsiveness.
-- Real scenarios: parsing, compression, search indexing, image/data processing.
-- Impact: the UI remains responsive during expensive computation.
+- Назначение: выносить CPU-intensive операции из main thread.
+- Пример в проекте: подсчет простых чисел выполняется либо в основном потоке, либо внутри Worker.
+- Реальные сценарии: парсинг больших данных, сжатие, поиск, индексация, обработка изображений, тяжелые вычисления.
+- Эффект: интерфейс остается отзывчивым во время дорогих вычислений.
 
 ### requestIdleCallback
 
-- Purpose: schedule non-critical background work during idle periods.
-- Project example: a queue of small precomputation tasks runs in chunks with a timeout fallback.
-- Real scenarios: cache warming, cleanup, non-critical analytics, precomputing suggestions.
-- Impact: reduces visible jank, but it must not be used for urgent or correctness-critical operations.
+- Назначение: выполнять некритичные фоновые задачи в периоды простоя браузера.
+- Пример в проекте: очередь небольших задач выполняется чанками, с fallback через `setTimeout`.
+- Реальные сценарии: прогрев кеша, предварительные вычисления, non-critical analytics, cleanup после рендера.
+- Эффект: снижает заметные лаги, но не подходит для срочных или критически важных операций.
 
 ### requestAnimationFrame
 
-- Purpose: synchronize animation updates with browser paints.
-- Project example: a moving ball compares `setInterval` with `requestAnimationFrame`.
-- Real scenarios: DOM animation, canvas, WebGL, custom transitions.
-- Impact: smoother animation and predictable cleanup with `cancelAnimationFrame`.
+- Назначение: синхронизировать обновления анимации с кадрами браузера.
+- Пример в проекте: простая анимация сравнивает цикл на `setInterval` и цикл на `requestAnimationFrame`.
+- Реальные сценарии: DOM-анимации, canvas, WebGL, кастомные переходы.
+- Эффект: более плавная анимация и корректный cleanup через `cancelAnimationFrame`.
 
 ### Event Handling
 
-- Purpose: understand listeners, delegation, bubbling, capturing, cancellation, and propagation.
-- Project example: a large button grid switches between individual listeners and delegated handling, with a visual event log.
-- Real scenarios: tables, menus, trees, virtualized lists, guarded navigation.
-- Impact: fewer listeners, less churn, and easier debugging of propagation bugs.
+- Назначение: показать работу event listeners, delegation, bubbling, capturing, `preventDefault` и `stopPropagation`.
+- Пример в проекте: большой список кнопок переключается между отдельными listeners и event delegation, а event log показывает порядок событий.
+- Реальные сценарии: таблицы, меню, деревья, большие списки, guarded navigation.
+- Эффект: delegation уменьшает количество listeners и помогает проще обслуживать динамические списки.
 
 ### Passive Event Listeners
 
-- Purpose: tell the browser that a scroll-related listener will not cancel scrolling.
-- Project example: a scroll box compares `{ passive: true }` with a blocking wheel listener.
-- Real scenarios: scroll tracking, touch/wheel metrics, sticky UI reactions.
-- Impact: smoother scrolling because the browser does not need to wait for JavaScript before scrolling.
+- Назначение: показать, как `{ passive: true }` помогает браузеру не ждать JavaScript перед scroll.
+- Пример в проекте: scroll box сравнивает passive wheel listener и blocking listener, который вызывает `preventDefault`.
+- Реальные сценарии: scroll tracking, touch/wheel metrics, sticky UI reactions.
+- Эффект: более плавный scrolling, когда обработчик только наблюдает событие и не отменяет его.
 
 ### MutationObserver
 
-- Purpose: observe DOM changes without polling.
-- Project example: a DOM playground logs added/removed nodes and attribute changes while options are toggled.
-- Real scenarios: editor plugins, third-party embeds, analytics, legacy DOM integration.
-- Impact: precise, batched mutation records and less wasteful DOM scanning.
+- Назначение: наблюдать за DOM-изменениями без polling.
+- Пример в проекте: DOM playground позволяет добавлять элементы, удалять их и менять attributes, а журнал показывает mutation records.
+- Реальные сценарии: editor plugins, third-party embeds, analytics, интеграция с legacy DOM.
+- Эффект: точные batched-записи об изменениях DOM без постоянного сканирования дерева.
 
 ### Performance API
 
-- Purpose: create high-resolution timings and named marks/measures.
-- Project example: a sort operation is measured with `performance.now()`, `mark()`, `measure()`, and `PerformanceObserver`.
-- Real scenarios: startup milestones, user-flow instrumentation, custom profiling.
-- Impact: accurate timings that can be correlated with browser performance traces.
+- Назначение: измерять операции с высокой точностью и создавать именованные marks/measures.
+- Пример в проекте: сортировка массива измеряется через `performance.now()`, `performance.mark()`, `performance.measure()` и `PerformanceObserver`.
+- Реальные сценарии: измерение startup, пользовательских сценариев, дорогих операций, кастомных performance metrics.
+- Эффект: точные метрики, которые можно сопоставлять с Performance trace в DevTools.
 
 ### Rendering Performance Lab
 
-- Purpose: see how main-thread work affects rendering.
-- Project example: long task, frequent DOM updates, layout thrashing, and batched reads/writes scenarios.
-- Real scenarios: dashboards, editors, large tables, resizing tools, animation-heavy UI.
-- Impact: batching reads/writes and shortening tasks reduces layout recalculation and input delay.
+- Назначение: показать, как main thread и DOM-операции влияют на rendering pipeline.
+- Пример в проекте: long task, частые DOM updates, layout thrashing и batching DOM reads/writes.
+- Реальные сценарии: dashboards, editors, большие таблицы, drag/resize tools, animation-heavy interfaces.
+- Эффект: batching чтений и записей DOM уменьшает layout recalculation и освобождает кадры для input/render/paint.
 
-## Running Locally
+## Структура
+
+```text
+src/
+  app/
+  components/
+  labs/
+    resize-observer/
+    intersection-observer/
+    web-workers/
+    request-idle-callback/
+    request-animation-frame/
+    events/
+    passive-listeners/
+    mutation-observer/
+    performance/
+    rendering/
+  utils/
+  workers/
+```
+
+Логика каждой лабораторной находится рядом с соответствующим компонентом. Общие компоненты используются только для layout, информационных блоков, метрик и переключателей режимов.
+
+## Локальный Запуск
 
 ```bash
 npm install
@@ -87,15 +130,24 @@ npm run build
 npm run lint
 ```
 
+После запуска dev server открой адрес, который выведет Vite, обычно:
+
+```text
+http://127.0.0.1:5173/
+```
+
 ## Browser DevTools
 
-Open Chrome DevTools -> Performance and record while running the naive and optimized versions. Useful things to compare:
+Открой Chrome DevTools -> Performance и запиши trace во время работы лабораторных. Особенно полезно сравнивать наивные и оптимизированные режимы.
 
-- Main thread activity.
-- Long tasks.
-- Scripting time.
-- Rendering and layout.
-- Painting.
+На что смотреть:
+
+- Main thread;
+- long tasks;
+- scripting;
+- rendering;
+- layout;
+- painting;
 - FPS.
 
-The built-in diagnostics are intentionally lightweight. They make behavior visible in the UI, while DevTools gives the deeper timeline.
+Встроенная диагностика в интерфейсе специально простая. Она помогает быстро увидеть эффект, а DevTools дает подробную временную шкалу и реальные browser metrics.
