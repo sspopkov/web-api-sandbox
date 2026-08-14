@@ -262,17 +262,147 @@ button {
   gap: 16px;
 }
 
-.resizableBox {
-  resize: horizontal;
-  overflow: auto;
-  min-width: 240px;
+.resizeSectionHeader {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.resizeSectionHeader > div > span {
+  color: #657181;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.panel .resizeSectionHeader h3 {
+  margin: 4px 0 0;
+}
+
+.resizeSectionHeader p {
+  margin: 0;
+  color: #5b6573;
+  line-height: 1.5;
+}
+
+.resizeWidthControl {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 14px 0;
+  border-top: 1px solid #dfe4ea;
+  border-bottom: 1px solid #dfe4ea;
+}
+
+.resizeWidthControl label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 700;
+}
+
+.resizeWidthControl output {
+  color: #0f766e;
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+.resizeWidthControl input {
+  width: 100%;
+  accent-color: #0f766e;
+}
+
+.resizeWidthControl small {
+  color: #657181;
+  line-height: 1.4;
+}
+
+.resizeMeasurementStatus {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-left: 4px solid #0f766e;
+  background: #f0fdfa;
+  line-height: 1.45;
+}
+
+.resizeMeasurementStatus.waiting {
+  border-left-color: #2563eb;
+  background: #eff6ff;
+}
+
+.resizeMeasurementStatus.stale {
+  border-left-color: #d97706;
+  background: #fffbeb;
+}
+
+.resizeMeasurementStatus span {
+  color: #5b6573;
+}
+
+.resizeExperimentLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.resizeStage {
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 346px;
+  padding: 16px;
+  overflow: hidden;
+  border: 1px solid #cfd7df;
+  background: #eef2f6;
+}
+
+.resizeWidget {
   max-width: 100%;
-  width: 420px;
-  min-height: 210px;
+  height: 312px;
+  padding: 16px;
+  overflow: auto;
   border: 2px solid #0f766e;
   border-radius: 8px;
-  padding: 16px;
-  background: #effcf8;
+  background: #ffffff;
+}
+
+.resizeWidget.stale {
+  border-color: #d97706;
+}
+
+.resizeWidgetHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.resizeWidgetHeader span {
+  color: #657181;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.resizeWidgetHeader h3 {
+  margin: 3px 0 0;
+  font-size: 1.05rem;
+  overflow-wrap: anywhere;
+}
+
+.resizeWidgetHeader > strong {
+  color: #0f766e;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+.resizeWidget.compact .resizeWidgetHeader {
+  grid-template-columns: 1fr;
 }
 
 .adaptiveGrid {
@@ -285,7 +415,79 @@ button {
 }
 
 .adaptiveGrid.roomy {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.miniCard {
+  display: grid;
+  gap: 3px;
+  align-content: start;
+  min-width: 0;
+}
+
+.miniCard span,
+.miniCard small {
+  color: #657181;
+}
+
+.miniCard strong {
+  overflow-wrap: anywhere;
+}
+
+.miniCard small {
+  font-size: 0.75rem;
+}
+
+.resizeDiagnostics {
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.resizeDiagnostics h3 {
+  margin: 0 0 6px;
+}
+
+.resizeDiagnostics > p {
+  margin: 0 0 14px;
+  color: #5b6573;
+  line-height: 1.45;
+}
+
+.resizeNotificationLog {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resizeNotificationLog li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px;
+  padding: 9px 10px;
+  border-left: 4px solid #0f766e;
+  background: #f0fdfa;
+}
+
+.resizeNotificationLog li > span {
+  color: #0f766e;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.resizeNotificationLog small {
+  display: block;
+  margin-top: 2px;
+  color: #657181;
+  line-height: 1.35;
+}
+
+.resizeEmptyLog {
+  padding: 14px 0;
+  border-top: 1px solid #dfe4ea;
+  color: #657181;
 }
 
 .miniCard,
@@ -758,6 +960,8 @@ button {
 @media (max-width: 820px) {
   .appShell,
   .twoColumn,
+  .resizeSectionHeader,
+  .resizeExperimentLayout,
   .eventSectionHeader,
   .eventStrategyLayout,
   .eventFlowLayout {
@@ -777,6 +981,17 @@ button {
   .eventStrategyLayout,
   .eventFlowLayout {
     gap: 14px;
+  }
+
+  .resizeSectionHeader,
+  .resizeExperimentLayout {
+    gap: 14px;
+  }
+
+  .resizeWidthControl label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .eventTimeline li {
