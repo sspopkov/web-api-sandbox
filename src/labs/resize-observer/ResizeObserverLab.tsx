@@ -33,15 +33,16 @@ export function ResizeObserverLab() {
   }, [mode]);
 
   const density = width < 360 ? 'compact' : 'roomy';
+  const densityLabel = density === 'compact' ? 'компактный' : 'просторный';
 
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Components often need to react to their own container size, not the whole viewport."
-        api="ResizeObserver reports element box changes after layout."
-        howItWorks="Drag the handle on the box. The observer reacts even when window.resize does not fire."
-        whenToUse="Resizable panels, cards inside grids, editors, charts, and embedded widgets."
-        impact="Avoids global resize bookkeeping and makes component-level adaptive UI more accurate."
+        problem="Компонентам часто нужно реагировать на размер собственного контейнера, а не всего viewport."
+        api="ResizeObserver сообщает об изменении размеров элемента после расчёта компоновки."
+        howItWorks="Потяните за маркер блока. Observer сработает, даже если событие window.resize не возникает."
+        whenToUse="Изменяемые панели, карточки в сетках, редакторы, графики и встраиваемые виджеты."
+        impact="Не требует глобального отслеживания окна и точнее адаптирует интерфейс к размеру компонента."
       />
       <section className="panel">
         <div className="controls">
@@ -49,25 +50,27 @@ export function ResizeObserverLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Optimized: ResizeObserver', value: 'observer' },
-              { label: 'Naive: window.resize', value: 'window' },
+              { label: 'Оптимально: ResizeObserver', value: 'observer' },
+              { label: 'Наивно: window.resize', value: 'window' },
             ]}
           />
         </div>
         <div className="metricsGrid">
-          <Metric label="Element width" value={`${width}px`} />
-          <Metric label="Callbacks" value={callbacks} />
-          <Metric label="Layout mode" value={density} />
+          <Metric label="Ширина элемента" value={`${width}px`} />
+          <Metric label="Вызовы callback" value={callbacks} />
+          <Metric label="Режим компоновки" value={densityLabel} />
         </div>
       </section>
       <section className="resizableBox" ref={boxRef}>
-        <h3>Resizable analytics widget</h3>
-        <p className="note">Use the browser resize handle in the lower-right corner.</p>
+        <h3>Изменяемый виджет аналитики</h3>
+        <p className="note">Используйте маркер изменения размера в правом нижнем углу.</p>
         <div className={`adaptiveGrid ${density}`}>
-          {['Revenue', 'Latency', 'Errors'].map((item) => (
+          {['Выручка', 'Задержка', 'Ошибки'].map((item) => (
             <div className="miniCard" key={item}>
               <strong>{item}</strong>
-              <p className="note">{density === 'compact' ? 'Stacked view' : 'Multi-column view'}</p>
+              <p className="note">
+                {density === 'compact' ? 'Вертикальный вид' : 'Многоколоночный вид'}
+              </p>
             </div>
           ))}
         </div>

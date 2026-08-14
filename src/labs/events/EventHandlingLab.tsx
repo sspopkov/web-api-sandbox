@@ -22,7 +22,7 @@ export function EventHandlingLab() {
       const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-cell]');
       if (!button) return;
       setSelected(Number(button.dataset.cell));
-      addLog(`delegated bubble: cell ${button.dataset.cell}`);
+      addLog(`делегирование, всплытие: ячейка ${button.dataset.cell}`);
     };
     const individualHandlers: Array<[HTMLButtonElement, EventListener]> = [];
 
@@ -34,20 +34,25 @@ export function EventHandlingLab() {
     grid.querySelectorAll<HTMLButtonElement>('[data-cell]').forEach((button) => {
       const handler = () => {
         setSelected(Number(button.dataset.cell));
-        addLog(`individual listener: cell ${button.dataset.cell}`);
+        addLog(`отдельный обработчик: ячейка ${button.dataset.cell}`);
       };
       button.addEventListener('click', handler);
       individualHandlers.push([button, handler]);
     });
-    return () => individualHandlers.forEach(([button, handler]) => button.removeEventListener('click', handler));
+    return () =>
+      individualHandlers.forEach(([button, handler]) =>
+        button.removeEventListener('click', handler),
+      );
   }, [mode]);
 
   useEffect(() => {
     const outer = outerRef.current;
     const inner = innerRef.current;
     if (!outer || !inner) return;
-    const capture = (event: Event) => addLog(`capture: ${(event.currentTarget as HTMLElement).dataset.zone}`);
-    const bubble = (event: Event) => addLog(`bubble: ${(event.currentTarget as HTMLElement).dataset.zone}`);
+    const capture = (event: Event) =>
+      addLog(`перехват: ${(event.currentTarget as HTMLElement).dataset.zone}`);
+    const bubble = (event: Event) =>
+      addLog(`всплытие: ${(event.currentTarget as HTMLElement).dataset.zone}`);
     outer.addEventListener('click', capture, { capture: true });
     inner.addEventListener('click', capture, { capture: true });
     outer.addEventListener('click', bubble);
@@ -63,11 +68,11 @@ export function EventHandlingLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Large lists can create many listeners, and event flow is often misunderstood."
-        api="DOM event propagation supports capturing, target, bubbling, cancellation, and delegation."
-        howItWorks="Click cells and nested buttons to see listener strategy and propagation order."
-        whenToUse="Tables, menus, trees, virtualized lists, links that need guarded navigation."
-        impact="Delegation reduces listener churn and event logs make propagation bugs visible."
+        problem="Большие списки создают много обработчиков, а порядок распространения событий легко понять неверно."
+        api="События DOM поддерживают перехват, целевую фазу, всплытие, отмену и делегирование."
+        howItWorks="Нажимайте ячейки и вложенную кнопку, чтобы увидеть стратегию и порядок обработки."
+        whenToUse="Таблицы, меню, деревья, виртуализированные списки и ссылки с проверкой перехода."
+        impact="Делегирование сокращает число обработчиков, а журнал наглядно показывает ошибки распространения."
       />
       <section className="panel">
         <div className="controls">
@@ -75,8 +80,8 @@ export function EventHandlingLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Delegation', value: 'delegated' },
-              { label: 'Individual listeners', value: 'individual' },
+              { label: 'Делегирование', value: 'delegated' },
+              { label: 'Отдельные обработчики', value: 'individual' },
             ]}
           />
           <a
@@ -84,21 +89,21 @@ export function EventHandlingLab() {
             href="https://example.com"
             onClick={(event) => {
               event.preventDefault();
-              addLog('preventDefault: navigation cancelled');
+              addLog('preventDefault: переход отменён');
             }}
           >
-            Test preventDefault
+            Проверить preventDefault
           </a>
         </div>
         <div className="metricsGrid">
-          <Metric label="Active listeners" value={mode === 'delegated' ? 1 : 60} />
-          <Metric label="Selected cell" value={selected || 'none'} />
-          <Metric label="Log entries" value={log.length} />
+          <Metric label="Активные обработчики" value={mode === 'delegated' ? 1 : 60} />
+          <Metric label="Выбранная ячейка" value={selected || 'нет'} />
+          <Metric label="Записи журнала" value={log.length} />
         </div>
       </section>
       <section className="twoColumn">
         <div className="panel">
-          <h3>Large interactive list</h3>
+          <h3>Большой интерактивный список</h3>
           <div className="eventGrid" ref={gridRef}>
             {Array.from({ length: 60 }, (_, index) => index + 1).map((cell) => (
               <button
@@ -113,26 +118,28 @@ export function EventHandlingLab() {
           </div>
         </div>
         <div className="panel">
-          <h3>Propagation playground</h3>
-          <div className="eventPlaygroundOuter" data-zone="outer" ref={outerRef}>
-            Outer
-            <div className="eventPlaygroundInner" data-zone="inner" ref={innerRef}>
-              Inner
+          <h3>Распространение события</h3>
+          <div className="eventPlaygroundOuter" data-zone="внешний элемент" ref={outerRef}>
+            Внешний элемент
+            <div className="eventPlaygroundInner" data-zone="внутренний элемент" ref={innerRef}>
+              Внутренний элемент
               <button
                 className="button"
                 onClick={(event) => {
                   event.stopPropagation();
-                  addLog('stopPropagation: target handled only by React handler');
+                  addLog('stopPropagation: событие обработано только обработчиком React');
                 }}
                 type="button"
               >
-                Stop propagation
+                Остановить всплытие
               </button>
             </div>
           </div>
         </div>
       </section>
-      <pre className="log">{log.join('\n') || 'Click controls to see event order'}</pre>
+      <pre className="log">
+        {log.join('\n') || 'Нажимайте элементы, чтобы увидеть порядок событий'}
+      </pre>
     </div>
   );
 }

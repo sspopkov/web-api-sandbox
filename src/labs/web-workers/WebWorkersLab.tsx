@@ -9,8 +9,8 @@ type Mode = 'main' | 'worker';
 export function WebWorkersLab() {
   const [mode, setMode] = useState<Mode>('worker');
   const [limit, setLimit] = useState(230000);
-  const [status, setStatus] = useState('idle');
-  const [result, setResult] = useState('not run');
+  const [status, setStatus] = useState('ожидание');
+  const [result, setResult] = useState('не запускалось');
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
@@ -18,13 +18,13 @@ export function WebWorkersLab() {
   }, []);
 
   const run = () => {
-    setStatus('running');
-    setResult('calculating...');
+    setStatus('выполняется');
+    setResult('вычисление...');
     if (mode === 'main') {
       const start = performance.now();
       const count = countPrimes(limit);
-      setResult(`${count} primes in ${Math.round(performance.now() - start)}ms`);
-      setStatus('done');
+      setResult(`${count} простых чисел за ${Math.round(performance.now() - start)} мс`);
+      setStatus('готово');
       return;
     }
 
@@ -34,14 +34,14 @@ export function WebWorkersLab() {
     });
     workerRef.current = worker;
     worker.onmessage = (event: MessageEvent<{ count: number; duration: number }>) => {
-      setResult(`${event.data.count} primes in ${Math.round(event.data.duration)}ms`);
-      setStatus('done');
+      setResult(`${event.data.count} простых чисел за ${Math.round(event.data.duration)} мс`);
+      setStatus('готово');
       worker.terminate();
       workerRef.current = null;
     };
     worker.onerror = () => {
-      setStatus('error');
-      setResult('worker failed');
+      setStatus('ошибка');
+      setResult('воркер завершился с ошибкой');
     };
     worker.postMessage({ limit });
   };
@@ -49,11 +49,11 @@ export function WebWorkersLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="CPU-heavy JavaScript blocks input, animation, and rendering on the main thread."
-        api="Web Workers execute scripts on a background thread and communicate by messages."
-        howItWorks="Both modes count primes. The moving dot keeps animating only when the main thread is free."
-        whenToUse="Parsing, compression, search indexing, image/data processing, expensive calculations."
-        impact="Keeps the interface responsive while non-UI computation continues."
+        problem="Ресурсоёмкий JavaScript блокирует ввод, анимацию и рендеринг в основном потоке."
+        api="Web Workers выполняют код в фоновом потоке и обмениваются данными через сообщения."
+        howItWorks="Оба режима считают простые числа. Движение точки показывает, свободен ли основной поток."
+        whenToUse="Парсинг, сжатие, поисковая индексация, обработка изображений и сложные вычисления."
+        impact="Интерфейс остаётся отзывчивым, пока вычисления, не связанные с UI, продолжаются."
       />
       <section className="panel">
         <div className="controls">
@@ -61,12 +61,12 @@ export function WebWorkersLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Optimized: worker', value: 'worker' },
-              { label: 'Main thread', value: 'main' },
+              { label: 'Оптимально: Web Worker', value: 'worker' },
+              { label: 'Основной поток', value: 'main' },
             ]}
           />
           <label>
-            Limit{' '}
+            Предел{' '}
             <input
               max={400000}
               min={50000}
@@ -77,13 +77,13 @@ export function WebWorkersLab() {
             />
           </label>
           <button className="primary" onClick={run} type="button">
-            Run calculation
+            Запустить вычисление
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Limit" value={limit} />
-          <Metric label="Worker state" value={status} />
-          <Metric label="Result" value={result} />
+          <Metric label="Предел" value={limit} />
+          <Metric label="Состояние" value={status} />
+          <Metric label="Результат" value={result} />
         </div>
       </section>
       <section className="pulseStage">

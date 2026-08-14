@@ -25,7 +25,11 @@ export function PerformanceApiLab() {
     data.sort((a, b) => a - b);
     const nowDuration = performance.now() - start;
     performance.mark('sandbox-operation-end');
-    performance.measure('sandbox-sort-operation', 'sandbox-operation-start', 'sandbox-operation-end');
+    performance.measure(
+      'sandbox-sort-operation',
+      'sandbox-operation-start',
+      'sandbox-operation-end',
+    );
     setDuration(nowDuration);
     setMarks(
       performance
@@ -37,24 +41,24 @@ export function PerformanceApiLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Date-based timing is imprecise and manual timings are hard to inspect in DevTools."
-        api="performance.now, mark, measure, and PerformanceObserver expose high-resolution timings."
-        howItWorks="Run a sort operation and inspect the generated marks and measures."
-        whenToUse="Profiling user flows, custom metrics, expensive operations, app startup milestones."
-        impact="Gives accurate instrumentation that can be correlated with DevTools performance traces."
+        problem="Измерение через Date недостаточно точное, а ручные замеры трудно анализировать в DevTools."
+        api="performance.now, mark, measure и PerformanceObserver дают высокоточную временную шкалу."
+        howItWorks="Запустите сортировку и изучите созданные временные метки и измерения."
+        whenToUse="Профилирование сценариев, пользовательские метрики, дорогие операции и запуск приложения."
+        impact="Даёт точные измерения, которые можно сопоставить с записью производительности в DevTools."
       />
       <section className="panel">
         <div className="controls">
           <button className="primary" onClick={runMeasuredWork} type="button">
-            Run measured operation
+            Запустить измеряемую операцию
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="performance.now duration" value={`${duration.toFixed(2)}ms`} />
-          <Metric label="Observed measures" value={observerCount} />
+          <Metric label="Длительность по performance.now" value={`${duration.toFixed(2)} мс`} />
+          <Metric label="Получено измерений" value={observerCount} />
         </div>
       </section>
-      <pre className="log">{marks.join('\n') || 'Run the operation to create marks'}</pre>
+      <pre className="log">{marks.join('\n') || 'Запустите операцию, чтобы создать метки'}</pre>
     </div>
   );
 }

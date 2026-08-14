@@ -67,11 +67,11 @@ export function RenderingPerformanceLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Main-thread rendering can stall when scripts run too long or repeatedly force layout."
-        api="The rendering pipeline rewards short tasks and grouped DOM reads/writes."
-        howItWorks="Run scenarios, then inspect the page in DevTools Performance to compare scripting and layout."
-        whenToUse="Dashboards, editors, large tables, drag/resize tools, animation-heavy interfaces."
-        impact="Batching work reduces layout recalculation and keeps frames available for input and paint."
+        problem="Рендеринг останавливается, когда скрипты надолго занимают основной поток или вызывают лишний layout."
+        api="Конвейер рендеринга эффективнее работает с короткими задачами и сгруппированными операциями DOM."
+        howItWorks="Запускайте сценарии и сравнивайте выполнение скриптов и layout в DevTools Performance."
+        whenToUse="Панели мониторинга, редакторы, большие таблицы, drag-and-drop и сложные анимации."
+        impact="Пакетная обработка сокращает перерасчёты layout и оставляет кадры для ввода и отрисовки."
       />
       <section className="panel">
         <div className="controls">
@@ -79,27 +79,27 @@ export function RenderingPerformanceLab() {
             value={scenario}
             onChange={setScenario}
             options={[
-              { label: 'Long task', value: 'long-task' },
-              { label: 'DOM updates', value: 'dom-updates' },
-              { label: 'Thrashing', value: 'thrashing' },
-              { label: 'Batched', value: 'batched' },
+              { label: 'Долгая задача', value: 'long-task' },
+              { label: 'Обновления DOM', value: 'dom-updates' },
+              { label: 'Layout thrashing', value: 'thrashing' },
+              { label: 'Пакетно', value: 'batched' },
             ]}
           />
           <button className="primary" onClick={run} type="button">
-            Run scenario
+            Запустить сценарий
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Duration" value={`${duration.toFixed(2)}ms`} />
-          <Metric label="Operations" value={operations} />
+          <Metric label="Длительность" value={`${duration.toFixed(2)} мс`} />
+          <Metric label="Операции" value={operations} />
         </div>
       </section>
       <section className="renderArea" ref={areaRef} />
-      <pre className="codeSample">{`Bad:
+      <pre className="codeSample">{`Плохо:
 element.style.width = nextWidth;
 element.offsetWidth;
 
-Better:
+Лучше:
 const widths = elements.map(el => el.offsetWidth);
 elements.forEach((el, index) => {
   el.style.width = nextWidth(widths[index]);

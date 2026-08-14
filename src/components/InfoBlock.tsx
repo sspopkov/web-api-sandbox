@@ -8,9 +8,9 @@ type InfoBlockProps = {
 
 export function InfoBlock({ problem, api, howItWorks, whenToUse, impact }: InfoBlockProps) {
   return (
-    <section className="infoGrid" aria-label="Lab explanation">
+    <section className="infoGrid" aria-label="Описание лабораторной работы">
       <article>
-        <h3>Problem</h3>
+        <h3>Проблема</h3>
         <p>{problem}</p>
       </article>
       <article>
@@ -18,15 +18,15 @@ export function InfoBlock({ problem, api, howItWorks, whenToUse, impact }: InfoB
         <p>{api}</p>
       </article>
       <article>
-        <h3>How It Works</h3>
+        <h3>Как это работает</h3>
         <p>{howItWorks}</p>
       </article>
       <article>
-        <h3>When To Use</h3>
+        <h3>Когда использовать</h3>
         <p>{whenToUse}</p>
       </article>
       <article>
-        <h3>Performance / UX Impact</h3>
+        <h3>Влияние на производительность и UX</h3>
         <p>{impact}</p>
       </article>
     </section>

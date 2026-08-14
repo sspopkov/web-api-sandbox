@@ -15,11 +15,11 @@ export function App() {
         <div className="brand">
           <span className="brandMark">API</span>
           <div>
-            <h1>Web API Sandbox</h1>
-            <p>Interactive labs for browser behavior.</p>
+            <h1>Песочница Web API</h1>
+            <p>Интерактивные лабораторные о работе браузера.</p>
           </div>
         </div>
-        <nav className="navList" aria-label="Labs">
+        <nav className="navList" aria-label="Лабораторные работы">
           {labs.map((lab, index) => (
             <button
               className={lab.slug === activeSlug ? 'navItem active' : 'navItem'}

@@ -52,11 +52,11 @@ export function RequestAnimationFrameLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Timer-based animation can drift and keeps firing even when it does not align with paints."
-        api="requestAnimationFrame runs callbacks right before the browser paints the next frame."
-        howItWorks="Switch loops and watch frame counts while the ball moves across the track."
-        whenToUse="DOM, canvas, and WebGL animation that should sync with refresh rate and tab visibility."
-        impact="Smoother animation and easier cleanup of paint-synchronized loops."
+        problem="Анимация по таймеру может рассинхронизироваться и запускаться независимо от отрисовки кадров."
+        api="requestAnimationFrame вызывает callback непосредственно перед отрисовкой следующего кадра."
+        howItWorks="Переключайте циклы и следите за числом кадров, пока шар движется по дорожке."
+        whenToUse="Анимации DOM, canvas и WebGL, синхронизированные с частотой экрана и видимостью вкладки."
+        impact="Более плавная анимация и простая очистка циклов, синхронизированных с отрисовкой."
       />
       <section className="panel">
         <div className="controls">
@@ -64,17 +64,17 @@ export function RequestAnimationFrameLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Optimized: rAF', value: 'raf' },
+              { label: 'Оптимально: rAF', value: 'raf' },
               { label: 'setInterval', value: 'interval' },
             ]}
           />
           <button onClick={() => setRunning((value) => !value)} type="button">
-            {running ? 'Pause' : 'Resume'}
+            {running ? 'Пауза' : 'Продолжить'}
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Frames" value={frames} />
-          <Metric label="Approx FPS" value={fps} />
+          <Metric label="Кадры" value={frames} />
+          <Metric label="Примерный FPS" value={fps} />
         </div>
       </section>
       <section className="animationTrack">

@@ -15,12 +15,12 @@ type IdleDeadlineLike = {
 const createTasks = () =>
   Array.from({ length: 24 }, (_, index) => ({
     id: index + 1,
-    label: `Precompute search hint ${index + 1}`,
+    label: `Подготовка поисковой подсказки ${index + 1}`,
   }));
 
 export function RequestIdleCallbackLab() {
   const [pending, setPending] = useState<IdleTask[]>(() => createTasks());
-  const [active, setActive] = useState('idle');
+  const [active, setActive] = useState('ожидание');
   const [done, setDone] = useState<string[]>([]);
   const requestId = useRef<number | null>(null);
   const pendingRef = useRef<IdleTask[]>(pending);
@@ -70,7 +70,7 @@ export function RequestIdleCallbackLab() {
                 16,
               );
       } else {
-        setActive('complete');
+        setActive('завершено');
       }
     };
 
@@ -83,36 +83,38 @@ export function RequestIdleCallbackLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Some work is useful but should not compete with first paint or direct input."
-        api="requestIdleCallback schedules non-urgent tasks during idle periods, with a timeout fallback."
-        howItWorks="Start the queue and interact with the page while small tasks are processed in chunks."
-        whenToUse="Warm caches, precompute suggestions, non-critical analytics, cleanup after rendering."
-        impact="Reduces user-visible jank, but it is unsuitable for urgent or correctness-critical work."
+        problem="Некоторые задачи полезны, но не должны конкурировать с первой отрисовкой и вводом пользователя."
+        api="requestIdleCallback планирует несрочные задачи на периоды простоя и использует fallback по таймеру."
+        howItWorks="Запустите очередь и взаимодействуйте со страницей, пока короткие задачи выполняются порциями."
+        whenToUse="Прогрев кеша, подготовка подсказок, некритичная аналитика и очистка после рендера."
+        impact="Уменьшает заметные задержки, но не подходит для срочных или критически важных операций."
       />
       <section className="panel">
         <div className="controls">
           <button className="primary" onClick={schedule} type="button">
-            Start background queue
+            Запустить фоновую очередь
           </button>
           <button
             onClick={() => {
               setPending(createTasks());
               pendingRef.current = createTasks();
               setDone([]);
-              setActive('idle');
+              setActive('ожидание');
             }}
             type="button"
           >
-            Reset
+            Сбросить
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Pending tasks" value={pending.length} />
-          <Metric label="Current task" value={active} />
-          <Metric label="Completed" value={done.length} />
+          <Metric label="Ожидают" value={pending.length} />
+          <Metric label="Текущая задача" value={active} />
+          <Metric label="Завершено" value={done.length} />
         </div>
       </section>
-      <pre className="log">{done.map((item) => `done: ${item}`).join('\n') || 'No tasks yet'}</pre>
+      <pre className="log">
+        {done.map((item) => `готово: ${item}`).join('\n') || 'Задачи ещё не выполнялись'}
+      </pre>
     </div>
   );
 }

@@ -66,11 +66,11 @@ export function IntersectionObserverLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="Scroll handlers often poll many element positions on every scroll event."
-        api="IntersectionObserver lets the browser notify when targets cross viewport thresholds."
-        howItWorks="Cards become initialized when visible; the sentinel loads the next page."
-        whenToUse="Lazy media, analytics exposure tracking, infinite feeds, deferred widgets."
-        impact="Less manual geometry work and fewer urgent scroll callbacks on the main thread."
+        problem="Обработчики scroll часто проверяют положение множества элементов при каждом событии прокрутки."
+        api="IntersectionObserver сообщает, когда целевые элементы пересекают заданные границы viewport."
+        howItWorks="Карточки инициализируются при появлении, а служебный элемент загружает следующую порцию."
+        whenToUse="Ленивая загрузка медиа, аналитика показов, бесконечные ленты и отложенные виджеты."
+        impact="Меньше ручных расчётов геометрии и срочных scroll-callback в основном потоке."
       />
       <section className="panel">
         <div className="controls">
@@ -78,18 +78,18 @@ export function IntersectionObserverLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Optimized: observer', value: 'observer' },
-              { label: 'Naive: scroll polling', value: 'scroll' },
+              { label: 'Оптимально: observer', value: 'observer' },
+              { label: 'Наивно: опрос при scroll', value: 'scroll' },
             ]}
           />
           <button onClick={() => setCount(16)} type="button">
-            Reset feed
+            Сбросить ленту
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Items loaded" value={count} />
-          <Metric label="Initialized" value={visible.size} />
-          <Metric label="Callbacks" value={callbacks} />
+          <Metric label="Загружено элементов" value={count} />
+          <Metric label="Инициализировано" value={visible.size} />
+          <Metric label="Вызовы callback" value={callbacks} />
         </div>
       </section>
       <section className="feed" ref={feedRef}>
@@ -103,14 +103,16 @@ export function IntersectionObserverLab() {
               else itemRefs.current.delete(item);
             }}
           >
-            <strong>Card {item}</strong>
+            <strong>Карточка {item}</strong>
             <p className="note">
-              {visible.has(item) ? 'Lazy content initialized.' : 'Waiting for viewport entry.'}
+              {visible.has(item)
+                ? 'Ленивый контент инициализирован.'
+                : 'Ожидает появления во viewport.'}
             </p>
           </article>
         ))}
         <div className="sentinel" ref={sentinelRef}>
-          Scroll here to load more
+          Прокрутите сюда, чтобы загрузить ещё
         </div>
       </section>
     </div>

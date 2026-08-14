@@ -34,11 +34,11 @@ export function PassiveListenersLab() {
   return (
     <div className="labStack">
       <InfoBlock
-        problem="The browser may need to wait for wheel/touch listeners before it knows scrolling is allowed."
-        api="addEventListener(type, handler, { passive: true }) promises not to call preventDefault."
-        howItWorks="Scroll the box. Blocking mode intentionally calls preventDefault and burns CPU."
-        whenToUse="Scroll, wheel, touchstart, and touchmove listeners that only observe input."
-        impact="Passive listeners let the browser keep scrolling smooth without waiting on JavaScript."
+        problem="Браузер может ждать обработчик wheel или touch, прежде чем поймёт, разрешена ли прокрутка."
+        api="addEventListener(type, handler, { passive: true }) гарантирует, что preventDefault не будет вызван."
+        howItWorks="Прокрутите блок. Блокирующий режим намеренно вызывает preventDefault и нагружает CPU."
+        whenToUse="Обработчики scroll, wheel, touchstart и touchmove, которые только наблюдают за вводом."
+        impact="Пассивные обработчики позволяют браузеру плавно прокручивать страницу, не ожидая JavaScript."
       />
       <section className="panel">
         <div className="controls">
@@ -46,8 +46,8 @@ export function PassiveListenersLab() {
             value={mode}
             onChange={setMode}
             options={[
-              { label: 'Passive', value: 'passive' },
-              { label: 'Blocking', value: 'blocking' },
+              { label: 'Пассивный', value: 'passive' },
+              { label: 'Блокирующий', value: 'blocking' },
             ]}
           />
           <button
@@ -57,19 +57,22 @@ export function PassiveListenersLab() {
             }}
             type="button"
           >
-            Reset metrics
+            Сбросить метрики
           </button>
         </div>
         <div className="metricsGrid">
-          <Metric label="Wheel events" value={events} />
-          <Metric label="Blocked events" value={blocked} />
-          <Metric label="Listener option" value={mode === 'passive' ? 'passive: true' : 'passive: false'} />
+          <Metric label="События wheel" value={events} />
+          <Metric label="Заблокировано" value={blocked} />
+          <Metric
+            label="Параметр обработчика"
+            value={mode === 'passive' ? 'passive: true' : 'passive: false'}
+          />
         </div>
       </section>
       <section className="scrollBox" ref={boxRef}>
         {Array.from({ length: 30 }, (_, index) => (
           <div className="scrollRow" key={index}>
-            Scroll row {index + 1}
+            Строка прокрутки {index + 1}
           </div>
         ))}
       </section>
