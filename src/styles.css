@@ -832,17 +832,203 @@ button {
   outline: 3px solid rgb(217 119 6 / 25%);
 }
 
+.passiveSectionHeader {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 1.1fr);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.passiveSectionHeader > div > span,
+.passiveScrollHeading > div > span {
+  color: #657181;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.panel .passiveSectionHeader h3,
+.passiveScrollHeading h3 {
+  margin: 4px 0 0;
+}
+
+.passiveSectionHeader p {
+  margin: 0;
+  color: #5b6573;
+  line-height: 1.5;
+}
+
+.passiveWorkloadControl {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 14px 0;
+  border-top: 1px solid #dfe4ea;
+  border-bottom: 1px solid #dfe4ea;
+}
+
+.passiveWorkloadControl label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 700;
+}
+
+.passiveWorkloadControl output {
+  color: #0f766e;
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+.passiveWorkloadControl input {
+  width: 100%;
+  accent-color: #0f766e;
+}
+
+.passiveWorkloadControl small {
+  color: #657181;
+  line-height: 1.4;
+}
+
+.passiveContractStatus {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-left: 4px solid #d97706;
+  background: #fffbeb;
+  line-height: 1.45;
+}
+
+.passiveContractStatus.passive {
+  border-left-color: #0f766e;
+  background: #f0fdfa;
+}
+
+.passiveContractStatus span {
+  color: #5b6573;
+}
+
+.passiveExperimentLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.passiveScrollHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.passiveScrollHeading > strong {
+  color: #0f766e;
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
 .scrollBox {
-  height: 260px;
+  height: 340px;
   overflow: auto;
-  border: 1px solid #cfd7df;
+  overscroll-behavior: contain;
+  border: 1px solid #aeb9c5;
   border-radius: 8px;
   background: #ffffff;
+  scrollbar-gutter: stable;
+}
+
+.scrollBox:focus-visible {
+  outline: 3px solid rgb(37 99 235 / 25%);
+  outline-offset: 2px;
 }
 
 .scrollRow {
-  padding: 18px;
-  border-bottom: 1px solid #edf1f5;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 68px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.scrollRow:nth-child(even) {
+  background: #f8fafc;
+}
+
+.scrollRow > span {
+  color: #8b98a8;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.scrollRow small {
+  display: block;
+  margin-top: 3px;
+  color: #657181;
+  line-height: 1.35;
+}
+
+.passiveClarification {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #dfe4ea;
+  color: #5b6573;
+  line-height: 1.5;
+}
+
+.passiveDiagnostics {
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.passiveDiagnostics h3 {
+  margin: 0 0 6px;
+}
+
+.passiveDiagnostics > p {
+  margin: 0 0 14px;
+  color: #5b6573;
+  line-height: 1.45;
+}
+
+.passiveEventLog {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passiveEventLog li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px;
+  padding: 9px 10px;
+  border-left: 4px solid #2563eb;
+  background: #eff6ff;
+}
+
+.passiveEventLog li > span {
+  color: #2563eb;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.passiveEventLog small {
+  display: block;
+  margin-top: 2px;
+  color: #657181;
+  line-height: 1.35;
+}
+
+.passiveEmptyLog {
+  padding: 14px 0;
+  border-top: 1px solid #dfe4ea;
+  color: #657181;
 }
 
 .domPlayground {
@@ -962,6 +1148,8 @@ button {
   .twoColumn,
   .resizeSectionHeader,
   .resizeExperimentLayout,
+  .passiveSectionHeader,
+  .passiveExperimentLayout,
   .eventSectionHeader,
   .eventStrategyLayout,
   .eventFlowLayout {
@@ -984,11 +1172,14 @@ button {
   }
 
   .resizeSectionHeader,
-  .resizeExperimentLayout {
+  .resizeExperimentLayout,
+  .passiveSectionHeader,
+  .passiveExperimentLayout {
     gap: 14px;
   }
 
-  .resizeWidthControl label {
+  .resizeWidthControl label,
+  .passiveWorkloadControl label {
     align-items: flex-start;
     flex-direction: column;
     gap: 4px;
