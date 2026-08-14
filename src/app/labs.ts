@@ -71,7 +71,7 @@ export const labs: LabDefinition[] = [
   {
     slug: 'mutation-observer',
     title: 'MutationObserver',
-    summary: 'Наблюдение за изменениями дочерних узлов и атрибутов в DOM-песочнице.',
+    summary: 'Наблюдение за узлами, атрибутами и текстом в DOM-песочнице.',
     api: 'MutationObserver',
     component: MutationObserverLab,
   },

@@ -186,6 +186,11 @@ button {
   border-color: #0f766e;
 }
 
+.controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .segmented {
   display: inline-flex;
   flex-wrap: wrap;
@@ -425,6 +430,91 @@ button {
   padding: 14px;
   border: 1px dashed #8b98a8;
   border-radius: 8px;
+}
+
+.domPlayground[data-state='highlighted'] {
+  border-color: #d97706;
+  border-style: solid;
+  background: #fffbeb;
+}
+
+.observerOptions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  padding: 14px 0;
+  margin-bottom: 14px;
+  border-top: 1px solid #dfe4ea;
+  border-bottom: 1px solid #dfe4ea;
+}
+
+.observerOption {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  line-height: 1.35;
+}
+
+.observerOption input {
+  margin-top: 3px;
+}
+
+.observerOption span,
+.observerOption small {
+  display: block;
+}
+
+.observerOption small {
+  margin-top: 3px;
+  color: #657181;
+}
+
+.observerStatus,
+.mutationActionStatus {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-left: 4px solid #8b98a8;
+  background: #f6f7f9;
+  line-height: 1.45;
+}
+
+.observerStatus.active,
+.mutationActionStatus.captured {
+  border-left-color: #0f766e;
+  background: #f0fdfa;
+}
+
+.observerStatus.paused,
+.mutationActionStatus.ignored {
+  border-left-color: #d97706;
+  background: #fffbeb;
+}
+
+.domItem {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: min(210px, 100%);
+}
+
+.domItemText {
+  color: #5b6573;
+  font-size: 0.9rem;
+}
+
+.domNestedArea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 24px;
+}
+
+.domNestedNode {
+  padding: 3px 6px;
+  border: 1px solid #93a2b4;
+  font-size: 0.78rem;
 }
 
 .domItem[data-active='true'] {
